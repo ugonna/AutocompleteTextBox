@@ -16,6 +16,7 @@
                                   Width="600"
                                   FontSize="40"
                                   PlaceholderText="Type in names of countries"
+                                  PopupDelayDuration="0.3"
                                   ItemsSource="{Binding}"/>
     </Grid>
 </Page>

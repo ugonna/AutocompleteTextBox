@@ -52,7 +52,7 @@ namespace AutocompleteTextBox
             "ItemsSource",
             typeof(object),
             typeof(AutocompleteTextBox),
-            new PropertyMetadata(Guid.Empty, new PropertyChangedCallback(ItemsSourceChanged)));
+            new PropertyMetadata(null, new PropertyChangedCallback(ItemsSourceChanged)));
         /// <summary>
         /// Gets or sets the object source used to generate the items in the autocomplete menu
         /// </summary>
@@ -68,20 +68,24 @@ namespace AutocompleteTextBox
             }
         }
 
-        private float _popupDelayDuration;
+        private static readonly DependencyProperty _popupDelayDuration = DependencyProperty.Register(
+            "PopupDelayDuration",
+            typeof(double),
+            typeof(AutocompleteTextBox),
+            new PropertyMetadata(0.0f, new PropertyChangedCallback(ItemsSourceChanged)));
         /// <summary>
         /// Gets or sets the time in seconds for which to delay the autocomplete popup
         /// menu after each keystroke in the textbox.
         /// <remarks>Acceptable values are between 0.0 and 1.0.</remarks>
         /// </summary>
-        public float PopupDelayDuration
+        public double PopupDelayDuration
         {
-            get { return _popupDelayDuration; }
+            get { return (double)GetValue(_popupDelayDuration); }
             set
             {
-                if (value >= 0.0f && value <= 1.0f)
+                if (value >= 0.0 && value <= 1.0)
                 {
-                    _popupDelayDuration = value;
+                    SetValue(_popupDelayDuration, value);
                 }
             }
         }
@@ -127,7 +131,7 @@ namespace AutocompleteTextBox
             IsTextPredictionEnabled = false;
 
             _popupMenu = new PopupMenu();
-            _popupDelayDuration = 0.3f;
+            PopupDelayDuration = 0.3f;
             _autoCompleteSearchMode = AutocompleteSearchMode.SearchesWithContains;
             _keyDownCancellationSource = new CancellationTokenSource();
         }
@@ -162,7 +166,7 @@ namespace AutocompleteTextBox
 
         private async Task ShowMatchedItemsPopup(CancellationToken cancellationToken)
         {
-            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(_popupDelayDuration));
+            await System.Threading.Tasks.Task.Delay(TimeSpan.FromSeconds(PopupDelayDuration));
 
             // Check task cancellation
             if (cancellationToken.IsCancellationRequested)
