@@ -1,12 +1,12 @@
 AutocompleteTextBox
 ===================
 
-A TextBox for WinRT apps that uses a custom dictionary of suggestions to popup autocomplete options.
+An autocomplete TextBox for WinRT/Modern (Windows 8/8.1) apps that uses a custom dictionary of suggestions to popup autocomplete options.
 
 Why?
 ----
 
-I needed a simple textbox with custom autocomplete suggestions for my app, [Eduplanner](http://goo.gl/pTODw "Eduplanner WinRT app"), and I couldn't find any on the internet (surprising, I know) so I built a simple one.
+I needed a simple textbox with custom autocomplete suggestions for my app, [Eduplanner](http://goo.gl/pTODw "Eduplanner WinRT app"), so I built a simple one.
 
 Do with it as you please.
 
@@ -44,5 +44,9 @@ countryTextBox.DataContext = countries;
 
 ```
 
+Known Issues
+------------
+- Autocomplete dropdown does not fill width of TextBox
+- Cannot use tab button from physical keyboard to set focus on the suggested entries
 
 
